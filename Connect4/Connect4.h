@@ -13,7 +13,6 @@ public:
 
 	// Plays a piece in the given column
 	void PlacePiece(int column);
-	unsigned long long GetTime();
 
 private:
 	void CreateMap();

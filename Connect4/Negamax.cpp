@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Negamax.h"
-
+#include <cassert>
 
 Negamax::Negamax()
 {
@@ -11,8 +11,9 @@ Negamax::~Negamax()
 {
 }
 
-int Negamax::Solve(const Position &pos)
+int Negamax::Solve(const Position &pos, int alpha, int beta)
 {
+	assert(alpha < beta);
 	nodeCount++;
 
 	if (pos.GetTotalMoves() == Position::WIDTH * Position::HEIGHT) // The game is a draw
@@ -28,7 +29,16 @@ int Negamax::Solve(const Position &pos)
 		}
 	}
 
-	int bestScore = -Position::WIDTH * Position::HEIGHT; // Initialize with the lowest score possible
+	int maxScore = (Position::WIDTH * Position::HEIGHT + 1 - pos.GetTotalMoves()) / 2;
+
+	if (beta > maxScore)
+	{
+		beta = maxScore;
+		if (alpha >= beta)
+		{
+			return beta;
+		}
+	}
 
 	for (int x = 0; x < Position::WIDTH; ++x) // Calculate the score of all moves possible next turn and save the highest
 	{
@@ -36,13 +46,17 @@ int Negamax::Solve(const Position &pos)
 		{
 			Position nextMove(pos);
 			nextMove.PlacePiece(x);			
-			int score = -Solve(nextMove);
-			if (score > bestScore)
+			int score = -Solve(nextMove, -beta, -alpha);
+			if (score >= beta)
 			{
-				bestScore = score;
+				return score;
+			}
+			if (score > alpha)
+			{
+				alpha = score;
 			}
 		}
 	}
 
-	return bestScore;
+	return alpha;
 }

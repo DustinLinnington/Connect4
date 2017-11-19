@@ -7,8 +7,8 @@ public:
 	Position() : board { 0 }, height{ 0 }, moves{ 0 } {};
 	~Position();
 
-	static const int WIDTH = 5;  // Width of the board
-	static const int HEIGHT = 4; // Height of the board
+	static const int WIDTH = 7;  // Width of the board
+	static const int HEIGHT = 6; // Height of the board
 
 	// Returns true if you can play a piece in the column
 	bool IsColumnPlayable(int column) const;

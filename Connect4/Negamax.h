@@ -7,7 +7,9 @@ public:
 	Negamax();
 	~Negamax();
 
-	int Solve(const Position &pos);
+	// Recursive function to score a board. Returns a number that corresponds to the amount of moves the current
+	// player could win in. Negative means they are in a losing position.
+	int Solve(const Position &pos, int alpha, int beta);
 
 	unsigned long long GetNodeCount() { return nodeCount; };
 	unsigned long long SetNodeCount(unsigned long long newCount) { nodeCount = newCount; };
