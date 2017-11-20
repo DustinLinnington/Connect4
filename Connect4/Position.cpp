@@ -11,7 +11,7 @@ bool Position::PlacePiece(std::string seq)
 	for (unsigned int i = 0; i < seq.size(); i++) 
 	{
 		int column = seq[i] - '1';
-		if (!PlacePiece(column))
+		if (!PlacePieceColumn(column))
 		{
 			return false;
 		}
@@ -19,20 +19,27 @@ bool Position::PlacePiece(std::string seq)
 	return true;
 }
 
-bool Position::PlacePiece(int column)
+bool Position::PlacePieceColumn(int column)
 {
 	if (column < 0 || column >= Position::WIDTH || !IsColumnPlayable(column)) // Invalid move
 	{
 		return false;
 	}
-	currentPosition ^= mask;
-	mask |= mask + bottomMaskCol(column);
-	moves++;
 
-	// For printing the board state.
+	//For printing the board state.
 	board[column][height[column]] = 1 + moves % 2;
 	height[column]++;
+
+	PlacePiece((mask + bottomMaskCol(column)) & columnMask(column));
+
 	return true;
+}
+
+void Position::PlacePiece(uint64_t move)
+{
+	currentPosition ^= mask;
+	mask |= move;
+	moves++;
 }
 
 bool Position::IsColumnPlayable(int column) const
@@ -74,7 +81,7 @@ uint64_t Position::GetKey() const
 //	}
 //	return false;
 //}
-
+//
 //bool Position::PlacePiece(std::string seq)
 //{
 //	for (unsigned int i = 0; i < seq.size(); i++)
@@ -88,7 +95,7 @@ uint64_t Position::GetKey() const
 //	return true;
 //}
 //
-//bool Position::PlacePiece(int column)
+//bool Position::PlacePieceColumn(int column)
 //{
 //	if (column < 0 || column >= Position::WIDTH || !IsColumnPlayable(column)) // Invalid move
 //	{
@@ -100,7 +107,7 @@ uint64_t Position::GetKey() const
 //
 //	return true;
 //}
-
+//
 //bool Position::IsColumnPlayable(int column) const
 //{
 //	return height[column] < HEIGHT;

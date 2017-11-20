@@ -1,14 +1,4 @@
-﻿  stdafx.cpp
-  TranspositionTable.cpp
+﻿  Negamax.cpp
 f:\school\bcit\btech\term3\ai\connect4\connect4\transpositiontable.h(53): warning C4244: 'return': conversion from 'uint64_t' to 'unsigned int', possible loss of data
-  Position.cpp
-  Negamax.cpp
-f:\school\bcit\btech\term3\ai\connect4\connect4\transpositiontable.h(53): warning C4244: 'return': conversion from 'uint64_t' to 'unsigned int', possible loss of data
-f:\school\bcit\btech\term3\ai\connect4\connect4\negamax.cpp(78): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
-  MoveSort.cpp
-  MiniMax.cpp
-  Connect4.cpp
-f:\school\bcit\btech\term3\ai\connect4\connect4\transpositiontable.h(53): warning C4244: 'return': conversion from 'uint64_t' to 'unsigned int', possible loss of data
-  Generating Code...
   Connect4.vcxproj -> F:\School\BCIT\BTech\Term3\AI\Connect4\x64\Debug\Connect4.exe
   Connect4.vcxproj -> F:\School\BCIT\BTech\Term3\AI\Connect4\x64\Debug\Connect4.pdb (Partial PDB)

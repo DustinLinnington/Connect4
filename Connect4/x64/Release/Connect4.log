@@ -1,13 +1,9 @@
-﻿  Connect4.cpp
+﻿  Negamax.cpp
 f:\school\bcit\btech\term3\ai\connect4\connect4\TranspositionTable.h(53): warning C4244: 'return': conversion from 'uint64_t' to 'unsigned int', possible loss of data
-  MoveSort.cpp
-  Negamax.cpp
-f:\school\bcit\btech\term3\ai\connect4\connect4\TranspositionTable.h(53): warning C4244: 'return': conversion from 'uint64_t' to 'unsigned int', possible loss of data
-Negamax.cpp(80): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
   Generating code
-  3 of 270 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
+  3 of 271 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Connect4.vcxproj -> F:\School\BCIT\BTech\Term3\AI\Connect4\x64\Release\Connect4.exe
   Connect4.vcxproj -> F:\School\BCIT\BTech\Term3\AI\Connect4\x64\Release\Connect4.pdb (Full PDB)
