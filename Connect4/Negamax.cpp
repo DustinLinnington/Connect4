@@ -11,21 +11,22 @@ Negamax::Negamax() : transTable(8388593)
 	}
 }
 
-
 Negamax::~Negamax()
 {
 }
 
 int Negamax::Solve(const Position &pos, int alpha, int beta, const LARGE_INTEGER startTime, LARGE_INTEGER &currentTime, LARGE_INTEGER frequency)
 {
-	QueryPerformanceCounter(&currentTime);
-	double elapsedTime = ((currentTime.QuadPart - startTime.QuadPart) * 1000.0 / frequency.QuadPart) / 1000.0;
-	if (elapsedTime >= 4.9)
-	{
-		return -10000;
-	}
+	//QueryPerformanceCounter(&currentTime);
+	//double elapsedTime = ((currentTime.QuadPart - startTime.QuadPart) * 1000.0 / frequency.QuadPart) / 1000.0;
+	//if (elapsedTime >= 4.9)
+	//{
+	//	return -10000;
+	//}
 
 	assert(alpha < beta);
+	assert(!pos.CanWinNextTurn());
+
 	nodeCount++;
 
 	uint64_t next = pos.PossibleNonLoosingMoves();
@@ -64,27 +65,32 @@ int Negamax::Solve(const Position &pos, int alpha, int beta, const LARGE_INTEGER
 		}
 	}
 
-	for (int x = 0; x < Position::WIDTH; ++x) // Calculate the score of all moves possible next turn and save the highest.
+
+	MoveSort moves;
+	for (int i = Position::WIDTH; --i;)
 	{
-		if (pos.IsColumnPlayable(columnOrder[x]))
+		if (uint64_t move = next & Position::columnMask(columnOrder[i]))
 		{
-			Position nextMove(pos);
-			nextMove.PlacePiece(columnOrder[x]);
-			int score = -Solve(nextMove, -beta, -alpha, startTime, currentTime, frequency);
+			moves.Add(move, pos.MoveScore(move));
+		}
+	}
+	while(uint64_t next = moves.GetNext()) // Calculate the score of all moves possible next turn and save the highest.
+	{
+		Position nextMove(pos);
+		nextMove.PlacePiece(next);
+		int score = -Solve(nextMove, -beta, -alpha, startTime, currentTime, frequency);
+		if (score == -10000 || score == 10000) // Time has run out
+		{
+			return score;
+		}
 
-			if (score == -10000 || score == 10000) // Time has run out
-			{
-				return score;
-			}
-
-			if (score >= beta)
-			{
-				return score;
-			}
-			if (score > alpha)
-			{
-				alpha = score;
-			}
+		if (score >= beta)
+		{
+			return score;
+		}
+		if (score > alpha)
+		{
+			alpha = score;
 		}
 	}
 	transTable.put(pos.GetKey(), alpha - Position::MIN_SCORE + 1); // save the upper bound of the position

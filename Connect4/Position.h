@@ -54,6 +54,19 @@ public:
 		return r & (boardMask ^ mask);
 	}
 
+	int MoveScore(uint64_t move) const 
+	{
+		return PopCount(ComputeWinningPosition(currentPosition | move, mask));
+	}
+
+	static unsigned int PopCount(uint64_t m) 
+	{
+		unsigned int c = 0;
+		for (c = 0; m; c++) 
+			m &= m - 1;
+		return c;
+	}
+
 	// Returns true if you can play a piece in the column
 	bool IsColumnPlayable(int column) const;
 
@@ -62,7 +75,7 @@ public:
 	bool PlacePiece(std::string seq);
 
 	// Checks whether a given play would be a winning move if the current player played it
-	bool IsWinningMove(int column) const;
+	//bool IsWinningMove(int column) const;
 
 	bool CanWinNextTurn() const
 	{
@@ -102,7 +115,7 @@ public:
 
 	int height[WIDTH];        // Number of pieces in each column.
 	int moves = 0;       // Number of moves played since the beinning of the game.
-private:
+
 	uint64_t currentPosition = 0;
 	uint64_t mask = 0;
 

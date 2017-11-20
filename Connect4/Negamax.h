@@ -1,7 +1,7 @@
 #pragma once
-#include "Position.h"
 #include <Query.h>
 #include "TranspositionTable.h"
+#include "MoveSort.h"
 
 class Negamax
 {

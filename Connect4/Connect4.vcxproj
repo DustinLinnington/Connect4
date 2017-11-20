@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Connect4.h" />
     <ClInclude Include="MiniMax.h" />
+    <ClInclude Include="MoveSort.h" />
     <ClInclude Include="Negamax.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="stdafx.h" />
@@ -154,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="Connect4.cpp" />
     <ClCompile Include="MiniMax.cpp" />
+    <ClCompile Include="MoveSort.cpp" />
     <ClCompile Include="Negamax.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="stdafx.cpp">
