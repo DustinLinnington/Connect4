@@ -12,9 +12,10 @@ public:
 	int Solve(const Position &pos, int alpha, int beta);
 
 	unsigned long long GetNodeCount() { return nodeCount; };
-	unsigned long long SetNodeCount(unsigned long long newCount) { nodeCount = newCount; };
+	void SetNodeCount(unsigned long long newCount) { nodeCount = newCount; };
 
 private:
 	unsigned long long nodeCount = 0; // Counts explored nodes.
+	int columnOrder[Position::WIDTH];
 };
 

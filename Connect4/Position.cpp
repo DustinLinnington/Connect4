@@ -8,13 +8,11 @@ Position::~Position()
 
 bool Position::IsWinningMove(int column) const
 {
-	int current_player = 1 + moves % 2;
-
 	// Check vertical wins.
 	if (height[column] >= 3
-		&& board[column][height[column] - 1] == current_player
-		&& board[column][height[column] - 2] == current_player
-		&& board[column][height[column] - 3] == current_player)
+		&& board[column][height[column] - 1] == GetCurrentPlayer()
+		&& board[column][height[column] - 2] == GetCurrentPlayer()
+		&& board[column][height[column] - 3] == GetCurrentPlayer())
 	{
 		return true;
 	}
@@ -23,11 +21,13 @@ bool Position::IsWinningMove(int column) const
 	{    
 		int friendlyPieces = 0;
 		for (int x = -1; x <= 1; x += 2)
-			for (int i = column + x, j = height[column] + x * y; i >= 0 && i < WIDTH && j >= 0 && j < HEIGHT && board[i][j] == current_player; ++friendlyPieces) 
+		{
+			for (int i = column + x, j = height[column] + x * y; i >= 0 && i < WIDTH && j >= 0 && j < HEIGHT && board[i][j] == GetCurrentPlayer(); ++friendlyPieces)
 			{
 				i += x;
 				j += x * y;
 			}
+		}
 		if (friendlyPieces >= 3)
 		{
 			return true;
@@ -36,25 +36,30 @@ bool Position::IsWinningMove(int column) const
 	return false;
 }
 
-unsigned int Position::PlacePiece(std::string seq)
+bool Position::PlacePiece(std::string seq)
 {
 	for (unsigned int i = 0; i < seq.size(); i++) 
 	{
 		int column = seq[i] - '1';
-		if (column < 0 || column >= Position::WIDTH || !IsColumnPlayable(column) || IsWinningMove(column)) // Invalid move
+		if (!PlacePiece(column))
 		{
-			return i;
+			return false;
 		}
-		PlacePiece(column);
 	}
-	return seq.size();
+	return true;
 }
 
-void Position::PlacePiece(int column)
+bool Position::PlacePiece(int column)
 {
+	if (column < 0 || column >= Position::WIDTH || !IsColumnPlayable(column)) // Invalid move
+	{
+		return false;
+	}
 	board[column][height[column]] = 1 + moves % 2;
 	height[column]++;
 	moves++;
+
+	return true;
 }
 
 bool Position::IsColumnPlayable(int column) const
