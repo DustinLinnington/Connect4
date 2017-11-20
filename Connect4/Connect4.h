@@ -4,6 +4,8 @@
 #include "MiniMax.h"
 #include "Negamax.h"
 
+class Position;
+
 using namespace std;
 
 class Connect4
@@ -13,7 +15,6 @@ public:
 	~Connect4();
 
 	// Plays a piece in the given column
-	void PlacePiece(int column);
 	Position currentBoardPosition;
 
 private:
@@ -23,7 +24,7 @@ private:
 	void TakeTurn();
 	void TakeAITurn();
 	void EndTurn();
-	int CheckIfGameOver();
+	int CheckIfGameOver(Position pos);
 
 	void PrintBoard();
 
